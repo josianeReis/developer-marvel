@@ -13,17 +13,23 @@
     "strictFunctionTypes": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "checkJs": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "module": "ES2020",
+    "target": "ES2020",
+    "moduleResolution": "node",
   },
   "include": [
     "src/**/**/*"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/styles/global.ts",
   ]
 }

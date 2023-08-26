@@ -1,9 +1,13 @@
 import React from 'react';
-import './assets/styles/style.css';
-// import Typography from "./components/Typography";
+import GlobalStyle from './styles/global';
 
-const App = () => {
-  return <h1>Hello H1</h1>;
+const App: React.FC = () => {
+  return (
+    <div className="App">
+      <GlobalStyle />
+      <h1>Hello H1</h1>
+    </div>
+  );
 };
 
 export default App;
