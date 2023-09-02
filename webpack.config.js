@@ -8,7 +8,12 @@ module.exports = [
     target: 'web',
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: 'bundle.js'
+      filename: 'bundle.js',
+      publicPath: '/'
+    },
+    devServer: {
+      static: './dist',
+      historyApiFallback: true
     },
     plugins: [
       new HtmlWebpackPlugin({

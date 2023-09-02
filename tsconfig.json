@@ -11,6 +11,7 @@
     "alwaysStrict": true,
     "strictBindCallApply": true,
     "strictFunctionTypes": true,
+    "useUnknownInCatchVariables": false,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "jsx": "react-jsx",
