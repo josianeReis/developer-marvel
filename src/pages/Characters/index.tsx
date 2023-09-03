@@ -1,9 +1,28 @@
-import React from 'react';
-
-// import { Container } from './styles';
+import React, { useEffect } from 'react';
+import { fetchCharacters } from '../../features/characters';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 const Characters: React.FC = () => {
-  return <h1>Heroes List</h1>;
+  const dispatch = useAppDispatch();
+  const characters = useAppSelector(
+    (state) => state.characters.characters.data
+  );
+
+  useEffect(() => {
+    dispatch(fetchCharacters());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <div className="test">
+      <h1>Heroes List</h1>
+      {characters.map((character) => (
+        <div key={character.id}>
+          <h2>{character.name}</h2>
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default Characters;

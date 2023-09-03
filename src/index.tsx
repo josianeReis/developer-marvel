@@ -11,8 +11,6 @@ const rootEl = document.querySelector('#root');
 if (!rootEl) throw new Error('Cannot find root element with that id');
 
 const root = createRoot(rootEl);
-// 2ede135777c9d2c3f38eac3c50069a81
-// f1ef23ababe13e9700845201c64095cca463d8e9
 
 root.render(
   <React.StrictMode>

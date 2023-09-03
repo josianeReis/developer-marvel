@@ -1,13 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
+import md5 from 'md5';
 
-interface AuthState {
-  publicKey: string;
+// TODO: move to types file
+interface UserAuth {
   privateKey: string;
+  publicKey: string;
 }
 
-const initialState: AuthState = {
+interface Auth extends UserAuth {
+  hash: string;
+}
+const initialState: Auth = {
   publicKey: '',
-  privateKey: ''
+  privateKey: '',
+  hash: ''
+};
+
+export const generateHashValue = ({
+  privateKey,
+  publicKey
+}: UserAuth): string => {
+  return md5(`1${privateKey}${publicKey}`);
 };
 
 export const authSlice = createSlice({
@@ -16,8 +29,13 @@ export const authSlice = createSlice({
   reducers: {
     login: (state, action) => {
       const { payload } = action;
-      state.publicKey = payload.publicKey;
-      state.privateKey = payload.privateKey;
+      const { publicKey, privateKey } = payload;
+      const hashValue = generateHashValue({ privateKey, publicKey });
+
+      localStorage.setItem('auth', JSON.stringify({ ...payload, hashValue }));
+      state.publicKey = publicKey;
+      state.privateKey = privateKey;
+      state.hash = hashValue;
     }
   }
 });

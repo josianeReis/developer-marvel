@@ -1,12 +1,15 @@
 import React from 'react';
 import { login } from '../../features/auth/auth';
-import { useAppDispatch } from '../../helpers';
-// import AddTodo from '../../components/AddTodo';
-// import Todos from '../../components/Todos';
+import { useAppDispatch } from '../../store/hooks';
 
 const Login: React.FC = () => {
-  const [publicKey, setPublicKey] = React.useState('');
-  const [privateKey, setPrivateKey] = React.useState('');
+  // TODO: Remove static values after finish the app
+  const [publicKey, setPublicKey] = React.useState(
+    '2ede135777c9d2c3f38eac3c50069a81'
+  );
+  const [privateKey, setPrivateKey] = React.useState(
+    'f1ef23ababe13e9700845201c64095cca463d8e9'
+  );
 
   const dispatch = useAppDispatch();
 
@@ -16,7 +19,6 @@ const Login: React.FC = () => {
 
     e.preventDefault();
     dispatch(login({ publicKey, privateKey }));
-    console.log('teste');
   };
 
   return (
@@ -37,12 +39,6 @@ const Login: React.FC = () => {
       <button type="submit">Entrar</button>
     </form>
   );
-  // return (
-  //   <>
-  //     <AddTodo />
-  //     <Todos />
-  //   </>
-  // );
 };
 
 export default Login;

@@ -1,7 +1,11 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, Navigate } from 'react-router-dom';
 
 const PrivateRoute = () => {
+  const auth = false;
+
+  if (!auth) return <Navigate to="/" />;
+
   return (
     <main>
       <Outlet />
