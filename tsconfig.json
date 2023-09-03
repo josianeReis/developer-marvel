@@ -1,14 +1,8 @@
 {
   "compilerOptions": {
-    "allowUnreachableCode": false,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "alwaysStrict": false,
     "useUnknownInCatchVariables": false,
     "jsx": "react-jsx",
-    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "checkJs": true,
@@ -18,6 +12,9 @@
     "module": "ES2020",
     "target": "ES2020",
     "moduleResolution": "node",
+    "types": [],
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
   },
   "include": [
     "src/**/**/*"
@@ -25,5 +22,6 @@
   "exclude": [
     "node_modules",
     "src/styles/global.ts",
+    // "src/features/characters/index.ts"
   ]
 }

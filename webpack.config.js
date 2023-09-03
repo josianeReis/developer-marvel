@@ -11,6 +11,7 @@ module.exports = [
       filename: 'bundle.js',
       publicPath: '/'
     },
+    stats: 'minimal',
     devServer: {
       static: './dist',
       historyApiFallback: true
@@ -21,12 +22,12 @@ module.exports = [
       })
     ],
     resolve: {
-      extensions: ['.js', '.ts', '.tsx', '.jsx']
+      extensions: ['.js', '.ts', '.tsx']
     },
     module: {
       rules: [
         {
-          test: /\.(ts|tsx)$/,
+          test: /\.(ts | tsx)$/,
           exclude: /node_modules/,
           use: 'ts-loader'
         },
