@@ -1,10 +1,10 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import PrivateRoute from './templates/PrivateRoute';
-import PublicRoute from './templates/PublicRoute';
-import Access from './pages/Login';
-import Characters from './pages/Characters';
-import PageNotFound from './pages/PageNotFound';
+import Access from '../pages/Login';
+import PageNotFound from '../pages/PageNotFound';
+import Characters from '../pages/Characters';
+import PublicRoute from './Public.template';
+import PrivateRoute from './Private.template';
 
 const Router = () => {
   return (

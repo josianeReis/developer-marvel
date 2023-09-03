@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { fetchCharacters } from '../../features/characters';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { fetchCharacters } from '../../store/slices/characters';
 
 const Characters: React.FC = () => {
   const dispatch = useAppDispatch();

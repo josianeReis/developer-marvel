@@ -21,7 +21,7 @@
   ],
   "exclude": [
     "node_modules",
-    "src/styles/global.ts",
+    "src/assets/styles/global.ts",
     // "src/features/characters/index.ts"
   ]
 }

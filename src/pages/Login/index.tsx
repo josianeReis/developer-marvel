@@ -1,5 +1,5 @@
 import React from 'react';
-import { login } from '../../features/auth/auth';
+import { login } from '../../store/slices/auth';
 import { useAppDispatch } from '../../store/hooks';
 
 const Login: React.FC = () => {
