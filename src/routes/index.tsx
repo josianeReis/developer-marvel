@@ -5,6 +5,7 @@ import PageNotFound from '../pages/PageNotFound';
 import Characters from '../pages/Characters';
 import PublicRoute from './Public.template';
 import PrivateRoute from './Private.template';
+import CharacterDetails from '../pages/CharacterDetails';
 
 const Router = () => {
   return (
@@ -14,7 +15,8 @@ const Router = () => {
         <Route path="*" element={<PageNotFound />} />
       </Route>
       <Route element={<PrivateRoute />}>
-        <Route path="Characters" element={<Characters />} />
+        <Route path="characters" element={<Characters />} />
+        <Route path="/characters/:id" element={<CharacterDetails />} />
       </Route>
     </Routes>
   );

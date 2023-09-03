@@ -1,25 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchCharacters } from '../../store/slices/characters';
+import { Link } from 'react-router-dom';
+
+const limit = 20;
+const offset = 0;
 
 const Characters: React.FC = () => {
   const dispatch = useAppDispatch();
-  const characters = useAppSelector(
-    (state) => state.characters.characters.data
-  );
+  const { data: characters } = useAppSelector((state) => state.characters);
+  console.log('characters', characters);
+
+  const dispatchFetchCharacters = useCallback(() => {
+    dispatch(fetchCharacters({ limit, offset }));
+  }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchCharacters());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    dispatchFetchCharacters();
+  }, [dispatchFetchCharacters]);
 
   return (
     <div className="test">
       <h1>Heroes List</h1>
       {characters.map((character) => (
-        <div key={character.id}>
-          <h2>{character.name}</h2>
-        </div>
+        <Link key={character.id} to={`/characters/${character.id}`}>
+          <div>{character.name}</div>
+        </Link>
       ))}
     </div>
   );

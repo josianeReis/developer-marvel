@@ -1,83 +1,89 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { getCharacters, getComicsByCharacterId } from '../../../services';
 
-// TODO: move to API file
-axios.interceptors.request.use((config) => {
-  const auth = JSON.parse(localStorage.getItem('auth'));
+interface initialStateInterface {
+  loading: boolean;
+  data: any[];
+  error?: any;
+  total?: number;
+  count?: number;
+  offset?: number;
+}
 
-  if (auth && auth.privateKey && auth.publicKey) {
-    config.params = {
-      apikey: auth.publicKey,
-      ts: '1',
-      hash: auth.hashValue
-    };
-  }
-  return config;
-});
+const initialState: initialStateInterface = {
+  loading: false,
+  data: []
+};
 
-// TODO: improve with API function
 export const fetchCharacters = createAsyncThunk(
-  'characters/charactersListLoading',
-
-  async () => {
-    const server = `https://gateway.marvel.com/v1/public/characters?limit=20&offset=0`;
-
-    const fetchData = await axios({
-      method: 'get',
-      url: server,
-      headers: { 'Content-Type': 'application/json' }
-    }).then((response) => {
-      if (response.status !== 200) {
-        console.error(':( Error, no fetched data');
-        return {};
-      } else {
-        const message = ':) Success, fetched data';
-        console.log('%c' + message);
-        return {
-          data: response.data.data.results,
-          total: response.data.data.total,
-          count: response.data.data.count
-        };
-      }
-    });
-
-    return fetchData;
+  'characters/fetchCharacters',
+  async ({ limit, offset }: any) => {
+    return await getCharacters({ limit, offset });
   }
 );
 
-const initialState = {
-  characters: {
-    status: 'idle',
-    data: [],
-    error: {}
+export const fetchComicsByCharacterId = createAsyncThunk(
+  'characters/fetchComicsByCharacter',
+  async (id: any) => {
+    return await getComicsByCharacterId(id);
   }
-};
+);
 
 const charactersSlice = createSlice({
   name: 'characters',
   initialState,
   reducers: {},
-  extraReducers: {
-    [fetchCharacters.pending.type]: (state) => {
-      state.characters = {
-        status: 'loading',
-        data: [],
-        error: {}
-      };
-    },
-    [fetchCharacters.fulfilled.type]: (state, action) => {
-      state.characters = {
-        status: 'success',
-        ...action.payload
-      };
-    },
-    [fetchCharacters.rejected.type]: (state, action) => {
-      state.characters = {
-        status: 'error',
-        data: [],
-        error: action.payload
-      };
-    }
+  extraReducers(builder) {
+    builder
+      .addCase(fetchCharacters.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchCharacters.fulfilled, (state, action) => {
+        const filteredCharacters = action.payload.data.map((character) => ({
+          id: character.id,
+          name: character.name,
+          description: character.description,
+          lastUpdate: character.modified,
+          thumbnail: character.thumbnail
+        }));
+
+        return {
+          ...state,
+          ...action.payload,
+          data: filteredCharacters
+        };
+      })
+      .addCase(fetchCharacters.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(fetchComicsByCharacterId.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchComicsByCharacterId.fulfilled, (state, action) => {
+        // TODO: export this logic to a helper function
+        const { characterId, results: comics } = action.payload;
+        const updatedCharacters = state.data.map((character) => {
+          if (character.id === characterId) {
+            return {
+              ...character,
+              comics
+            };
+          }
+          return character;
+        });
+
+        return {
+          ...state,
+          loading: false,
+          data: updatedCharacters
+        } as any;
+      })
+      .addCase(fetchComicsByCharacterId.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
   }
 });
 
