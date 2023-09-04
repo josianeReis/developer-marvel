@@ -16,6 +16,12 @@ const CharacterDetails: React.FC = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
+    // TODO: verify if characters is empty and fetch characters by id
+    // (fot hose cases when user access the page directly by url)
+    // console.log('characters', characters);
+    // if (!characters.length) {
+    //   console.log('');
+    // }
     dispatchFetchCharacters();
   }, [dispatchFetchCharacters]);
 
