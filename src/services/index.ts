@@ -36,7 +36,6 @@ export function getCharacterById(id) {
 }
 
 export const getComicsByCharacterId = async (characterId: number) => {
-  console.log('dentro characterId', typeof characterId);
   const response = await API.get(
     `/v1/public/characters/${characterId}/comics?limit=50&offset=${0}`
   ).then((response) => {
