@@ -4,6 +4,7 @@ import { useAppDispatch } from '../../store/hooks';
 import * as S from './styles';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import { useNavigate } from 'react-router-dom';
 
 // TODO: remove after finish
 // 2ede135777c9d2c3f38eac3c50069a81
@@ -12,12 +13,14 @@ import Button from '../../components/Button';
 const Login: React.FC = () => {
   const [publicKey, setPublicKey] = React.useState('');
   const [privateKey, setPrivateKey] = React.useState('');
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(login({ publicKey, privateKey }));
+    navigate('/characters');
   };
 
   return (
